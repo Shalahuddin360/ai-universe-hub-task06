@@ -4,9 +4,15 @@ const loadTools = async () => {
     const data = await (res.json())
     displayTools(data.data.tools);
 }
+
+// display all tools
 const displayTools = (tools) => {
     //  console.log(data)
+    // capture tools container to append all the tool 
     const toolsContainer = document.getElementById('tools-container');
+    toolsContainer.textContent = ''
+    //   display 6 tools only 
+    tools = tools.slice(0, 6)
     tools.forEach(tool => {
         // console.log(tool);
         const toolDiv = document.createElement('div');
@@ -46,5 +52,20 @@ const displayTools = (tools) => {
     `
         toolsContainer.appendChild(toolDiv);
     });
+    // stop loader 
+    toggleSpinner(false);
 }
-loadTools();
+const loadData = () => {
+    toggleSpinner(true)
+    loadTools();
+}
+
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if (isLoading) {
+        loaderSection.classList.remove('d-none');
+    }
+    else {
+        loaderSection.classList.add('d-none')
+    }
+}

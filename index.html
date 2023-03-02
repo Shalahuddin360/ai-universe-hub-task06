@@ -14,7 +14,7 @@
 
 </head>
 
-<body>
+<body onload="loadData()">
     <!-- header section stats here  -->
     <header>
         <h2>AI Universe Hub</h2>
@@ -25,10 +25,21 @@
         <!-- card section starts here  -->
         <section >
             <div id="tools-container" class="row row-cols-1 row-cols-md-3 g-4">
-               
+             
               </div>
         </section>
-        <!-- cards section end here  -->
+          <!-- cards section end here  -->
+        <!-- spinner or loader section starts here  -->
+        <section id="loader" class="d-none">
+            <div style="height:400px" class="d-flex  justify-content-center align-items-center">
+                <div class="spinner-border text-success" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+        </section>
+        <!-- spinner or loader section starts here  -->
+
+      
     </main>
     <!-- main sections ends here  -->
     <!-- Bootstrap script goes here -->
