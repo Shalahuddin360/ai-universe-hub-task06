@@ -27,6 +27,9 @@
             <div id="tools-container" class="row row-cols-1 row-cols-md-3 g-4">
              
               </div>
+              <div id="show-all" class="text-center d-none">
+                  <button id="btn-show-all" class="btn btn-primary">Show More</button>
+              </div>
         </section>
           <!-- cards section end here  -->
         <!-- spinner or loader section starts here  -->
@@ -39,7 +42,28 @@
         </section>
         <!-- spinner or loader section starts here  -->
 
-      
+       <!-- modal section starts here  -->
+       <section>
+        <div class="modal fade" id="toolDetails" tabindex="-1" aria-labelledby="toolDetailsLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="toolDetailsLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div id="toolDetailsBody" class="modal-body">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+       </section>
+       <!-- modal section ends here  -->
+
     </main>
     <!-- main sections ends here  -->
     <!-- Bootstrap script goes here -->

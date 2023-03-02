@@ -1,18 +1,27 @@
-const loadTools = async () => {
+const loadTools = async (dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`
     const res = await fetch(url)
     const data = await (res.json())
-    displayTools(data.data.tools);
+    displayTools(data.data.tools,dataLimit);
 }
 
 // display all tools
-const displayTools = (tools) => {
+const displayTools = (tools,dataLimit) => {
     //  console.log(data)
     // capture tools container to append all the tool 
     const toolsContainer = document.getElementById('tools-container');
     toolsContainer.textContent = ''
     //   display 6 tools only 
-    tools = tools.slice(0, 6)
+    const showAll = document.getElementById('show-all');
+    if(dataLimit && tools.length>6){
+        tools = tools.slice(0, 6);
+      
+        showAll.classList.remove('d-none')
+    }
+    else{
+        showAll.classList.add('d-none')
+    }
+
     tools.forEach(tool => {
         // console.log(tool);
         const toolDiv = document.createElement('div');
@@ -42,7 +51,7 @@ const displayTools = (tools) => {
                         <p class="text-muted">${tool.published_in}</p>
                     </div>
 
-                  <a href="#"><i class="c fas fa-arrow-right"></i></a>
+                  <a onclick="loadToolDetails('${tool.id}')" href="#"  data-bs-toggle="modal" data-bs-target="#toolDetails"><i  class="c fas fa-arrow-right"></i></a>
                </div>
                 
                         
@@ -52,15 +61,21 @@ const displayTools = (tools) => {
     `
         toolsContainer.appendChild(toolDiv);
     });
-    // stop loader 
+    // stop loader or spinner
     toggleSpinner(false);
 }
-const loadData = () => {
+//display show more cards using common function 
+const processSearch =(dataLimit) =>{
     toggleSpinner(true)
-    loadTools();
-}
+    loadTools(dataLimit);
+  } 
+// handle onload event  
 
-const toggleSpinner = isLoading => {
+const loadData = () => {
+  processSearch(6);
+}
+    // start loader 
+   const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
     if (isLoading) {
         loaderSection.classList.remove('d-none');
@@ -69,3 +84,17 @@ const toggleSpinner = isLoading => {
         loaderSection.classList.add('d-none')
     }
 }
+    // not the best way to load Show More 
+    document.getElementById('btn-show-all').addEventListener('click',function(){
+        processSearch();
+
+    })
+    // modal section here 
+    const loadToolDetails =async(id)=>{
+        const url =` https://openapi.programming-hero.com/api/ai/tool/${id}`
+        const res = await fetch(url)
+        const data = await res.json()
+        console.log(data.data);
+ 
+    }
+    
