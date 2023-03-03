@@ -102,19 +102,21 @@ const displayToolDetails = (tool) => {
     const toolDescription = document.getElementById('toolDetailsLabel');
     toolDescription.innerText = tool.description;
     const toolImage =document.getElementById('tool-image');
-    toolImage.innerHTML = `<img class="img-fluid rounded-start" src="${tool.image_link[0]}" alt="">`
+    toolImage.innerHTML = `<img class="img-fluid rounded-start" src="${tool.image_link[0]}" alt="">
+    `
 
     const toolPrice = document.getElementById('tool-price');
     toolPrice.innerHTML = `
-    <div class="shadow p-2 m-0 rounded">
+    <div class="shadow p-4 m-0 rounded">
   <p>${tool.pricing[0].plane  ? tool.pricing[0].plane : "No Found"}</p>
   <p>${tool.pricing[0].price ? tool.pricing[0].price : "No Cost" }</p>
 </div>
-<div class="shadow p-2 m-0 rounded">
+
+<div class="shadow p-4 m-0 rounded">
 <p>${tool.pricing[1].plane  ? tool.pricing[1].plane : "No Found"}</p>
 <p>${tool.pricing[1].price ? tool.pricing[1].price : "No cost" }</p>
 </div>
-<div class="shadow p-2 m-0 rounded">
+<div class="shadow p-4   rounded">
 <p>${tool.pricing[1].plane  ? tool.pricing[1].plane : "No Found"}</p>
 <p>${tool.pricing[1].price ? tool.pricing[1].price : "No Cost" }</p>
 </div>
@@ -139,4 +141,18 @@ toolFeatures.innerHTML =`
   </ul>
 </div>
 `
+ document.getElementById('tool-input').innerHTML =`${tool.input_output_examples[0].input ? tool.input_output_examples[0].input : 'No Found Input' } `
+ document.getElementById('tool-output').innerHTML =`${tool.input_output_examples[1].input ? tool.input_output_examples[1].input : 'No Found Output'} `
+
+ const btnShow = document.getElementById('btn');
+ btnShow.innerHTML = `${tool.accuracy.score ? tool.accuracy.score :  'No Found' }`
+ 
+  const btnAll = document.getElementById('btn');
+  if (btnShow.innerHTML = tool.accuracy.score) {
+      btnAll.classList.remove('d-none');
+  }
+  else if(btnShow.innerHTML ='No Found') {
+      btnAll.classList.add('d-none')
+  }
 }
+
