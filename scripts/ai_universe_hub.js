@@ -98,7 +98,7 @@ const loadToolDetails = async (id) => {
 
 }
 const displayToolDetails = (tool) => {
-    // console.log(tool.features)
+    console.log(tool.features['1'].feature_name)
     const toolDescription = document.getElementById('toolDetailsLabel');
     toolDescription.innerText = tool.description;
     const toolImage =document.getElementById('tool-image');
@@ -125,9 +125,9 @@ toolFeatures.innerHTML =`
 <div>
 <p class="fw-bold">Features</p>
   <ul>
-    <li>${tool.features.features_name}</li>
-    <li></li>
-    <li></li>
+    <li>${tool.features['1'].feature_name ? tool.features['1'].feature_name : 'No Found' }</li>
+    <li>${tool.features['2'].feature_name ? tool.features['2'].feature_name : 'No Found' }</li>
+    <li>${tool.features['3'].feature_name ? tool.features['3'].feature_name : 'No Found' }</li>
   </ul>
 </div>
 <div>
