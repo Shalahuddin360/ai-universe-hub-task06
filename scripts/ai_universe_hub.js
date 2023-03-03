@@ -69,7 +69,7 @@ const displayTools = (tools, dataLimit) => {
 const processSearch = (dataLimit) => {
     toggleSpinner(true)
     loadTools(dataLimit);
-    
+
 }
 // handle onload event  
 
@@ -110,17 +110,20 @@ const displayToolDetails = (tool) => {
     const toolPrice = document.getElementById('tool-price');
     toolPrice.innerHTML = `
     <div class="shadow p-lg-4 p-sm-3  m-0 rounded">
-  <p>${tool.pricing[0].plane ? tool.pricing[0].plane : "No Found"}</p>
-  <p>${tool.pricing[0].price ? tool.pricing[0].price : "No Cost"}</p>
+    <p>${tool.pricing[0].price ? tool.pricing[0].price : "Free Of Cost"}</p>
+    <p>${tool.pricing[0].plane ? tool.pricing[0].plane : "No Data Found"}</p>
+
 </div>
 
 <div class="shadow p-lg-4 p-sm-3 m-0 rounded">
-<p>${tool.pricing[1].plane ? tool.pricing[1].plane : "No Found"}</p>
-<p>${tool.pricing[1].price ? tool.pricing[1].price : "No cost"}</p>
+<p>${tool.pricing[1].price ? tool.pricing[1].price : "Free Of Cost"}</p>
+<p>${tool.pricing[1].plane ? tool.pricing[1].plane : "No Data Found"}</p>
+
 </div>
 <div class="shadow p-lg-4 p-sm-3   rounded">
-<p>${tool.pricing[1].plane ? tool.pricing[1].plane : "No Found"}</p>
-<p>${tool.pricing[1].price ? tool.pricing[1].price : "No Cost"}</p>
+<p>${tool.pricing[2].price ? tool.pricing[2].price : "Free Of Cost"}</p>
+<p>${tool.pricing[2].plane ? tool.pricing[2].plane : "No Data Found"}</p>
+
 </div>
     
     `
@@ -129,22 +132,22 @@ const displayToolDetails = (tool) => {
 <div>
 <p class="fw-bold">Features</p>
   <ul>
-    <li>${tool.features['1'].feature_name ? tool.features['1'].feature_name : 'No Found'}</li>
-    <li>${tool.features['2'].feature_name ? tool.features['2'].feature_name : 'No Found'}</li>
-    <li>${tool.features['3'].feature_name ? tool.features['3'].feature_name : 'No Found'}</li>
+    <li>${tool.features['1'].feature_name ? tool.features['1'].feature_name : 'No Data Found'}</li>
+    <li>${tool.features['2'].feature_name ? tool.features['2'].feature_name : 'No Data Found'}</li>
+    <li>${tool.features['3'].feature_name ? tool.features['3'].feature_name : 'No Data Found'}</li>
   </ul>
 </div>
 <div>
   <p class="fw-bold">Integrations</p>
   <ul>
-    <li>${tool.integrations[0] ? "FB Messenger" : "No Found"}</li>
-    <li>${tool.integrations[1] ? tool.integrations[1] : "No Found"}</li>
-    <li>${tool.integrations[2] ? tool.integrations[2] : "No Found"}</li>
+    <li>${tool.integrations[0] ? tool.integrations[0] : "No Data Found"}</li>
+    <li>${tool.integrations[1] ? tool.integrations[1] : "No Data Found"}</li>
+    <li>${tool.integrations[2] ? tool.integrations[2] : "No Data Found"}</li>
   </ul>
 </div>
 `
-    document.getElementById('tool-input').innerHTML = `${tool.input_output_examples[0].input ? tool.input_output_examples[0].input : 'No Found Input'} `
-    document.getElementById('tool-output').innerHTML = `${tool.input_output_examples[1].input ? tool.input_output_examples[1].input : 'No Found Output'} `
+    document.getElementById('tool-input').innerHTML = `${tool.input_output_examples[0].input ? tool.input_output_examples[0].input : 'No Found Input Data'} `
+    document.getElementById('tool-output').innerHTML = `${tool.input_output_examples[1].input ? tool.input_output_examples[1].input : 'No Found Output Data'} `
 
     const btnShow = document.getElementById('btn');
     btnShow.innerHTML = `${tool.accuracy.score ? (tool.accuracy.score * 100) : 'No Found'}`
@@ -158,7 +161,7 @@ const displayToolDetails = (tool) => {
     }
 }
 //sort by date 
-    const loadSortDate = async (dataLimit) => {
+const loadSortDate = async (dataLimit) => {
 
     const url = `https://openapi.programming-hero.com/api/ai/tools`
     const res = await fetch(url)
@@ -169,7 +172,7 @@ const displayToolDetails = (tool) => {
         return new Date(b.published_in) - new Date(a.published_in);
 
     });
- 
-    displayTools(sortedData,dataLimit);
+
+    displayTools(sortedData, dataLimit);
 
 }
