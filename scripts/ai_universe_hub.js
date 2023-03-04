@@ -170,13 +170,13 @@ const displayToolDetails = (tool) => {
     document.getElementById('tool-output').innerHTML = `${tool.input_output_examples[0].output ? tool.input_output_examples[0].output : 'No! Not Yet! Take a break!!!'} `
 
     const btnShow = document.getElementById('btn');
-    btnShow.innerHTML = `${tool.accuracy.score ? (tool.accuracy.score * 100)  : 'No Found'}`
-
+    btnShow.innerHTML = ` ${tool.accuracy.score ? (tool.accuracy.score * 100) : 'No Found'} <span>% accuracy</span>`
+    
     const btnAll = document.getElementById('btn');
-    if (btnShow.innerHTML = (tool.accuracy.score * 100)) {
+    if ( (tool.accuracy.score * 100)) {
         btnAll.classList.remove('d-none');
     }
-    else if (btnShow.innerHTML = 'No Found') {
+    else{
         btnAll.classList.add('d-none');
     }
 }
