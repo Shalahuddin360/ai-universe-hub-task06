@@ -89,7 +89,7 @@ const toggleSpinner = isLoading => {
 // not the best way to load Show More 
 document.getElementById('btn-show-all').addEventListener('click', function () {
     processSearch();
-
+    loadSortDate();
 })
 // modal section here 
 const loadToolDetails = async (id) => {
