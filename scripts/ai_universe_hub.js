@@ -1,8 +1,14 @@
 const loadTools = async (dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`
+  try{
     const res = await fetch(url)
     const data = await (res.json())
     displayTools(data.data.tools, dataLimit);
+  }
+  catch(error){
+    console.log(error);
+  }
+   
 
 }
 
@@ -17,10 +23,10 @@ const displayTools = (tools, dataLimit) => {
     if (dataLimit && tools.length > 6) {
         tools = tools.slice(0, 6);
 
-        showAll.classList.remove('d-none')
+        showAll.classList.remove('d-none');
     }
     else {
-        showAll.classList.add('d-none')
+        showAll.classList.add('d-none');
     }
 
     tools.forEach(tool => {
@@ -62,12 +68,14 @@ const displayTools = (tools, dataLimit) => {
     `
         toolsContainer.appendChild(toolDiv);
     });
+    
     // stop loader or spinner
     toggleSpinner(false);
 }
+
 //display show more cards using common function 
 const processSearch = (dataLimit) => {
-    toggleSpinner(true)
+    toggleSpinner(true);
     loadTools(dataLimit);
 
 }
@@ -76,31 +84,38 @@ const processSearch = (dataLimit) => {
 const loadData = () => {
     processSearch(6);
 }
-// start loader 
+// start loader or spinner
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
     if (isLoading) {
         loaderSection.classList.remove('d-none');
     }
     else {
-        loaderSection.classList.add('d-none')
+        loaderSection.classList.add('d-none');
     }
 }
 // not the best way to load Show More 
 document.getElementById('btn-show-all').addEventListener('click', function () {
     processSearch();
+ // sort  by date empty value set 
     loadSortDate();
 })
-// modal section here 
+// fetch all tools available in a id
+// modal section starts 
 const loadToolDetails = async (id) => {
     const url = ` https://openapi.programming-hero.com/api/ai/tool/${id}`
-    const res = await fetch(url)
-    const data = await res.json()
-    displayToolDetails(data.data);
+    try{
+        const res = await fetch(url)
+        const data = await res.json()
+        displayToolDetails(data.data);
+    }
+    catch(error){
+        console.log(error);
+    }
 
 }
 const displayToolDetails = (tool) => {
-    console.log(tool.features['1'].feature_name)
+    // console.log(tool.features['1'].feature_name)
     const toolDescription = document.getElementById('toolDetailsLabel');
     toolDescription.innerText = tool.description;
     const toolImage = document.getElementById('tool-image');
@@ -109,36 +124,39 @@ const displayToolDetails = (tool) => {
 
     const toolPrice = document.getElementById('tool-price');
     toolPrice.innerHTML = `
-    <div class="shadow p-lg-4 p-sm-3  m-0 rounded">
+    <div class="shadow text-center p-lg-3 p-sm-2 m-0 rounded text-success">
     <p>${tool.pricing[0].price ? tool.pricing[0].price : "Free Of Cost"}</p>
     <p>${tool.pricing[0].plane ? tool.pricing[0].plane : "No Data Found"}</p>
 
-</div>
+    </div>
 
-<div class="shadow p-lg-4 p-sm-3 m-0 rounded">
-<p>${tool.pricing[1].price ? tool.pricing[1].price : "Free Of Cost"}</p>
-<p>${tool.pricing[1].plane ? tool.pricing[1].plane : "No Data Found"}</p>
+    <div class="shadow  text-center p-lg-3 p-sm-2 m-0 rounded text-warning-emphasis">
+        <p>${tool.pricing[1].price ? tool.pricing[1].price : "Free Of Cost"}</p>
+        <p>${tool.pricing[1].plane ? tool.pricing[1].plane : "No Data Found"}</p>
+    </div>
 
-</div>
-<div class="shadow p-lg-4 p-sm-3   rounded">
-<p>${tool.pricing[2].price ? tool.pricing[2].price : "Free Of Cost"}</p>
-<p>${tool.pricing[2].plane ? tool.pricing[2].plane : "No Data Found"}</p>
 
-</div>
+    <div class="shadow  text-center p-lg-3  p-sm-2 m-0 rounded text-danger">
+        <p>${tool.pricing[2].price ? tool.pricing[2].price : "Free Of Cost"}</p>
+        <p>${tool.pricing[2].plane ? tool.pricing[2].plane : "No Data Found"}</p>
+
+    </div>
     
     `
     const toolFeatures = document.getElementById('tool-features');
     toolFeatures.innerHTML = `
-<div>
-<p class="fw-bold">Features</p>
+<div class="text-muted">
+
+<p class="fw-bold text-dark fs-3">Features</p>
   <ul>
     <li>${tool.features['1'].feature_name ? tool.features['1'].feature_name : 'No Data Found'}</li>
     <li>${tool.features['2'].feature_name ? tool.features['2'].feature_name : 'No Data Found'}</li>
     <li>${tool.features['3'].feature_name ? tool.features['3'].feature_name : 'No Data Found'}</li>
   </ul>
 </div>
-<div>
-  <p class="fw-bold">Integrations</p>
+
+<div class="text-muted ">
+  <p class="fw-bold text-dark fs-3">Integrations</p>
   <ul>
     <li>${tool.integrations[0] ? tool.integrations[0] : "No Data Found"}</li>
     <li>${tool.integrations[1] ? tool.integrations[1] : "No Data Found"}</li>
@@ -146,8 +164,8 @@ const displayToolDetails = (tool) => {
   </ul>
 </div>
 `
-    document.getElementById('tool-input').innerHTML = `${tool.input_output_examples[0].input ? tool.input_output_examples[0].input : 'No Found Input Data'} `
-    document.getElementById('tool-output').innerHTML = `${tool.input_output_examples[1].input ? tool.input_output_examples[1].input : 'No Found Output Data'} `
+    document.getElementById('tool-input').innerHTML = `${tool.input_output_examples[0].input ? tool.input_output_examples[0].input : 'Can you give any example?'} `
+    document.getElementById('tool-output').innerHTML = `${tool.input_output_examples[0].output ? tool.input_output_examples[0].output : 'No! Not Yet! Take a break!!!'} `
 
     const btnShow = document.getElementById('btn');
     btnShow.innerHTML = `${tool.accuracy.score ? (tool.accuracy.score * 100) : 'No Found'}`
@@ -157,22 +175,28 @@ const displayToolDetails = (tool) => {
         btnAll.classList.remove('d-none');
     }
     else if (btnShow.innerHTML = 'No Found') {
-        btnAll.classList.add('d-none')
+        btnAll.classList.add('d-none');
     }
 }
-//sort by date 
+
+//sort by date starts
 const loadSortDate = async (dataLimit) => {
 
     const url = `https://openapi.programming-hero.com/api/ai/tools`
-    const res = await fetch(url)
-    const data = await (res.json())
-    // sort by date 
-    const sortedData = [...data.data.tools].sort((a, b) => {
-
-        return new Date(b.published_in) - new Date(a.published_in);
-
-    });
-
-    displayTools(sortedData, dataLimit);
+     try{
+        const res = await fetch(url)
+        const data = await (res.json())
+        // sort by date an object of array date property from API 
+        const sortedData = [...data.data.tools].sort((a, b) => {
+    
+            return new Date(b.published_in) - new Date(a.published_in);
+    
+        });
+    
+        displayTools(sortedData, dataLimit);
+     }
+     catch(error){
+        console.log(error);
+     }
 
 }
