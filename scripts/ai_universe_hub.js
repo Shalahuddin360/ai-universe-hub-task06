@@ -31,6 +31,8 @@ const loadTools = async (dataLimit) => {
         showAll.classList.add('d-none');
     }
 
+    
+
     tools.forEach(tool => {
     // console.log(tool);
     const toolDiv = document.createElement('div');
